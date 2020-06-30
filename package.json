@@ -1,0 +1,6 @@
+{
+  "name": "js-oixoed",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {"jquery": "^3.4.x"}
+}

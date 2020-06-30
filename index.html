@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Prova</title>
+      <meta content="width=device-width,initial-scale=1,minimal-ui" name="viewport">
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+   crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/vue-material.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/theme/default.css">
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/vue-material@beta"></script>
+    <script src="https://unpkg.com/vue-router"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic|Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"> 
+
+  <style> 
+    #app {
+      height: 100vh;
+      background-color: #d50000;
+    }
+    h3 {
+      font-family: 'Roboto thin', sans-serif;
+      font-style: italic;
+      font-size: 14pt;
+      color: black;
+    }
+    h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 25pt;
+      color: lightgrey;
+    }
+    .marvel {
+      position: relative;
+      left: 200px;
+    }
+  </style>
+
+</head>
+
+<body>
+    <md-app id="app">
+        <md-app-toolbar class="md-transparent" style="height:4em;">
+          <md-button class="md-icon-button" @click="menuVisible = true" v-if="!menuVisible">
+          <md-icon>menu</md-icon>
+        </md-app-toolbar>
+    
+      <md-app-drawer md-persistent="full" :md-active.sync="menuVisible" style="width:25em"> 
+            <md-toolbar class="md-transparent" md-elevation="0">
+            <img class="logo" src="https://i.ibb.co/k9NrWjs/logo.png" alt="logo" title="logo" />
+             
+            </md-toolbar>
+            <md-list>
+              <md-list-item to="/home">
+                <md-icon>home</md-icon>
+                <div class="md-list-item-text">Home</div>
+              </md-list-item>
+              <md-list-item to="/page1">
+                <md-icon>local_movies</md-icon>
+                <div class="md-list-item-text">Saghe</div>
+              </md-list-item>
+              <md-list-item to="/page2" onclick="callApiTop()"> 
+                <md-icon>star_border</md-icon>
+                <div class="md-list-item-text">I nostri Top</div>
+              </md-list-item>
+              <md-list-item to="/page3">
+                <md-icon>person</md-icon>
+                <div class="md-list-item-text">About</div> 
+              </md-list-item>
+            </md-list>
+             <!-- <div class="md-toolbar-section-end" style="position:absolute; bottom:0em;right:0em;">
+                <md-button class="md-icon-button" @click="menuVisible = false">
+                  <md-icon>keyboard_arrow_left</md-icon>
+                </md-button>
+              </div> -->
+      </md-app-drawer>
+
+      <md-app-content>
+        <router-view></router-view>
+      </md-app-content>
+    </md-app> 
+
+
+  <template id="home">
+      <div>
+        <md-toolbar class="md-accent" style="background-color: #80deea; width:50%; margin: 0 auto; margin-top: 7em">
+          <div class="md-toolbar-row">
+            <div class="md-toolbar-section-start">
+              <md-button class="md-icon-button">
+                <md-icon>search</md-icon>
+              </md-button>
+               <input type="text" id="titolo_film" style="border-style:none;width:100%;background-color: #80deea;font-weight:bold;font-size:1.1em;color:white;" />
+            </div>
+            
+            <md-button onclick="apiCall()">Cerca</md-button>
+          </div>
+        </md-toolbar>
+      <div id="tabella" style="margin-top:4em;"></div>
+      
+      </div>
+  </template>
+
+  <template id="page1">
+      <div class="md-layout md-gutter">
+          <div v-for="user in users" class="md-layout-item md-size-33 md-medium-size-50 md-xsmall-size-100">
+            <md-card :to="'/detail/' + user.id" md-with-hover> 
+                <md-card-header>
+                  <div class="md-title">{{user.name}}</div>
+                  <div class="md-subhead">{{user.description}}</div>
+                </md-card-header>
+                <md-card-media>
+                    <img :src="user.avatar">
+                    <md-card-expand>
+                            <md-card-actions md-alignment="space-between">
+                                <div>
+                                  <md-button class="md-raised md-primary" v-on:click="user.onAddMe" onclick="window-alert('Il film è stato aggiunto alla lista dei preferiti')">ADD ME</md-button>
+                                  <md-button class="md-raised" to="/page3"> All Reviews </md-button>
+                                </div>
+
+                                <md-card-expand-trigger>
+                                  <md-button class="md-icon-button">
+                                    <md-icon>keyboard_arrow_down</md-icon>
+                                  </md-button>
+                                </md-card-expand-trigger>
+                            </md-card-actions>
+
+                          <md-card-expand-content>
+                            <md-card-content>
+                              <p>{{user.trama}}</p> 
+                            </md-card-content>
+                          </md-card-expand-content>
+                    </md-card-expand>
+              </md-card-media>
+            </md-card>
+            <br>
+          </div>
+        </div>
+    </template>
+
+
+    <template id="detail">
+      <div>
+        <h1>{{user.name}}</h1>
+        <img :src="user.avatar"><br>
+        <span>{{user.description}}</span>
+      </div>
+    </template>
+
+    <template id="page2">
+      <div>
+        <div id="filmEstate" class="nostriTop"><h2 style="color:black;">I film dell'estate</h2><div id="tabellaEstate"></div></div>
+        <div id="commedia" class="nostriTop"><h2 style="color:black;">Commedia</h2><div id="tabellaCommedia"></div></div>
+        <div id="horror" class="nostriTop"><h2 style="color:black;">Horror</h2><div id="tabellaHorror"></div></div>
+       
+      </div> 
+    </template>
+
+    <template id="page3">
+      <div>
+       
+          
+    </template>
+
+</body>
+</html>
