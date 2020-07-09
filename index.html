@@ -14,6 +14,8 @@
     <script src="https://unpkg.com/vue-router"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic|Material+Icons">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"> 
+       <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-app.js"></script> 
+    <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-firestore.js"></script> 
 
   <style> 
     #app {
@@ -64,10 +66,15 @@
                 <md-icon>star_border</md-icon>
                 <div class="md-list-item-text">I nostri Top</div>
               </md-list-item>
+              <md-list-item to="/page5" onclick="callApiFavourite()" id="btn">
+                <md-icon>star_border</md-icon>
+                <div class="md-list-item-text">I tuoi preferiti</div> 
+              </md-list-item>
               <md-list-item to="/page3">
                 <md-icon>person</md-icon>
                 <div class="md-list-item-text">About</div> 
               </md-list-item>
+              
             </md-list>
              <!-- <div class="md-toolbar-section-end" style="position:absolute; bottom:0em;right:0em;">
                 <md-button class="md-icon-button" @click="menuVisible = false">
@@ -96,46 +103,84 @@
             <md-button onclick="apiCall()">Cerca</md-button>
           </div>
         </md-toolbar>
-      <div id="tabella" style="margin-top:4em;"></div>
+      <table id="tabella" style="margin-top:4em;"></table>
       
       </div>
   </template>
 
   <template id="page1">
-      <div class="md-layout md-gutter">
-          <div v-for="user in users" class="md-layout-item md-size-33 md-medium-size-50 md-xsmall-size-100">
-            <md-card :to="'/detail/' + user.id" md-with-hover> 
-                <md-card-header>
-                  <div class="md-title">{{user.name}}</div>
-                  <div class="md-subhead">{{user.description}}</div>
-                </md-card-header>
-                <md-card-media>
-                    <img :src="user.avatar">
-                    <md-card-expand>
-                            <md-card-actions md-alignment="space-between">
-                                <div>
-                                  <md-button class="md-raised md-primary" v-on:click="user.onAddMe" onclick="window-alert('Il film è stato aggiunto alla lista dei preferiti')">ADD ME</md-button>
-                                  <md-button class="md-raised" to="/page3"> All Reviews </md-button>
-                                </div>
+      <div >
+          <template>
+            
+          <md-card style="position:absolute; height:250px; width:950px">
+              <md-card-header>
+                <md-card-media style="position:absolute; top:0px; left:-15px; width:182px">
+                  <img src="https://images-na.ssl-images-amazon.com/images/I/81oND6XuHsL._SL1500_.jpg" alt="saga">
+                </md-card-media>
 
-                                <md-card-expand-trigger>
-                                  <md-button class="md-icon-button">
-                                    <md-icon>keyboard_arrow_down</md-icon>
-                                  </md-button>
-                                </md-card-expand-trigger>
-                            </md-card-actions>
+                <md-card-header-text style="position:absolute; left:250px">
+                  <div class="md-title">Harry Potter</div>
+                  <div class="md-subhead" style="text-align:justify; width:650px" >Harry Potter è un ragazzo di undici anni che vive con gli zii e il cugino, i Dursley, dopo essere rimasto orfano all'età di un anno; gli zii lo tormentano ogni giorno, tenendogli anche nascosta la verità sulla morte dei genitori. Il giorno del suo undicesimo compleanno Hagrid, un vecchio amico dei suoi genitori, gli rivela che lui in realtà è un mago, e che i suoi genitori sono stati uccisi dal più grande mago oscuro di sempre, Lord Voldemort, il quale aveva tentato di uccidere anche Harry, fallendo e perdendo tutti i poteri; gli rivela inoltre di essere iscritto ad una scuola di magia, Hogwarts, introducendolo quindi alla realtà del Mondo Magico. </div>
+                </md-card-header-text>
+              </md-card-header>
 
-                          <md-card-expand-content>
-                            <md-card-content>
-                              <p>{{user.trama}}</p> 
-                            </md-card-content>
-                          </md-card-expand-content>
-                    </md-card-expand>
-              </md-card-media>
+                <md-card-actions style="position:absolute; right:40px; top:190px">
+                 <md-button to="/page4" onclick="viewSaga('Harry Potter')" class="md-raised md-primary">Entra</md-button>
+
+                </md-card-actions>
             </md-card>
-            <br>
-          </div>
-        </div>
+            
+
+
+         
+            <md-card style="position:absolute; height:250px; width:950px;top:25em;">
+              <md-card-header>
+                <md-card-media style="position:absolute; top:0px; left:-15px; height:15em; width:182px">
+                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT6dCOl0jdUW43v4kkz_kzXdQthF04Lb5ilSA&usqp=CAU" alt="saga" style="height:18em;">
+                </md-card-media>
+
+                <md-card-header-text style="position:absolute; left:250px">
+                  <div class="md-title">Hunger Games</div>
+                  <div class="md-subhead" style="text-align:justify; width:650px" >Hunger games bla bla </div>
+                </md-card-header-text>
+              </md-card-header>
+
+                <md-card-actions style="position:absolute; right:40px; top:190px">
+                <md-button to="/page4" onclick="viewSaga('Hunger Games')" class="md-raised md-primary">Entra</md-button>
+                </md-card-actions>
+                
+            </md-card>
+       
+
+
+          </template>
+
+
+
+
+          <div>
+          
+ 
+      </div>
+
+</template>
+
+<style lang="scss" scoped>
+  .md-card {
+    width: 320px;
+    margin: 4px;
+    display: inline-block;
+    vertical-align: top;
+  }
+</style>
+
+<script>
+export default {
+  name: 'Media'
+}
+</script>
+    
+      </div>
     </template>
 
 
@@ -146,6 +191,7 @@
         <span>{{user.description}}</span>
       </div>
     </template>
+
 
     <template id="page2">
       <div>
@@ -158,9 +204,23 @@
 
     <template id="page3">
       <div>
+        
+        </div>
        
           
     </template>
+    <template id="page4">
+      <div>
+          <div id="visualizzaSaga"></div>
+      </div>
+    </template>
+
+    <template id="page5">
+      <div>
+        <div id="visualizzaPreferiti"></div>
+      </div>
+    </template>
+
 
 </body>
 </html>
