@@ -78,7 +78,7 @@ window.callApiFavourite = function(){
             
             var mdsubhead = document.createElement("div");
             mdsubhead.classList.add("md-subhead");
-            mdsubhead.style.textAlign="center";
+            mdsubhead.style.textAlign="justify";
             var textContent = document.createTextNode(response.Plot);
             mdsubhead.appendChild(textContent);
 
