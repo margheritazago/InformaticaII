@@ -4,18 +4,18 @@
 <head>
   <meta charset="utf-8"/>
   <title>Prova</title>
-      <meta content="width=device-width,initial-scale=1,minimal-ui" name="viewport">
-        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-   crossorigin="anonymous"></script>
+  <meta content="width=device-width,initial-scale=1,minimal-ui" name="viewport">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/vue-material.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/theme/default.css">
-    <script src="https://unpkg.com/vue"></script>
-    <script src="https://unpkg.com/vue-material@beta"></script>
-    <script src="https://unpkg.com/vue-router"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic|Material+Icons">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"> 
-       <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-app.js"></script> 
-    <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-firestore.js"></script> 
+  <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/theme/default.css">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/vue"></script>
+  <script src="https://unpkg.com/vue-material@beta"></script>
+  <script src="https://unpkg.com/vue-router"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic|Material+Icons">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"> 
+  <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-app.js"></script> 
+  <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-firestore.js"></script> 
 
   <style> 
     #app {
@@ -32,10 +32,6 @@
       font-family: 'Montserrat', sans-serif;
       font-size: 25pt;
       color: lightgrey;
-    }
-    .marvel {
-      position: relative;
-      left: 200px;
     }
   </style>
 
@@ -66,7 +62,7 @@
                 <md-icon>star_border</md-icon>
                 <div class="md-list-item-text">I nostri Top</div>
               </md-list-item>
-              <md-list-item to="/page5" onclick="callApiFavourite()" id="btn">
+              <md-list-item to="/page3" onclick="callApiFavourite()" id="btn">
                 <md-icon>favorite_border</md-icon>
                 <div class="md-list-item-text">I tuoi preferiti</div> 
               </md-list-item>
@@ -132,7 +128,8 @@
 
                 <md-card-header-text style="position:absolute; left:250px">
                   <div class="md-title">Hunger Games</div>
-                  <div class="md-subhead" style="text-align:justify; width:650px" >Hunger games bla bla </div>
+                  <div class="md-subhead" style="text-align:justify; width:650px" > Il titolo del libro corrisponde al nome del "reality show" ambientato nella nazione di Panem, governata dal dispotico Presidente Snow, al quale partecipano un ragazzo e una ragazza estratti a sorte da ciascuno dei dodici distretti di cui è composta la Nazione.
+Questi distretti, anni addietro, erano tredici e si erano ribellati al controllo della capitale di Panem, ovvero Capitol City, scatenando una rivolta. Alla fine, però, Capitol City prevalse, rase al suolo il tredicesimo distretto e, come conseguenza, per punire i 12 distretti rimasti, istituì gli Hunger Games, nei quali i 24 partecipanti devono affrontarsi e combattere su un terreno pieno di insidie e di trappole, finché uno solo rimane vivo. </div>
                 </md-card-header-text>
               </md-card-header>
 
@@ -156,34 +153,9 @@
 
 </template>
 
-<style lang="scss" scoped>
-  .md-card {
-    width: 320px;
-    margin: 4px;
-    display: inline-block;
-    vertical-align: top;
-  }
-</style>
-
-<script>
-export default {
-  name: 'Media'
-}
-</script>
     
       </div>
     </template>
-
-
-    <template id="detail">
-      <div>
-        <h1>{{user.name}}</h1>
-        <img :src="user.avatar"><br>
-        <span>{{user.description}}</span>
-      </div>
-    </template>
-
-
     <template id="page2">
       <div>
         <div id="filmEstate" class="nostriTop"><h2 style="color:black;">I film dell'estate</h2><div id="tabellaEstate"></div></div>
@@ -192,15 +164,15 @@ export default {
        
       </div> 
     </template>
-    <template id="page4">
+    <template id="page3">
       <div>
-          <div id="visualizzaSaga"></div>
+        <div id="visualizzaPreferiti"></div>
       </div>
     </template>
 
-    <template id="page5">
+     <template id="page4">
       <div>
-        <div id="visualizzaPreferiti"></div>
+          <div id="visualizzaSaga"></div>
       </div>
     </template>
 

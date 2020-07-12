@@ -14,10 +14,13 @@
 if (!firebase.apps.length) {
 firebase.initializeApp(firebaseConfig);
 }
+//Crei variabile riferimento database
 var db = firebase.firestore();
+
+//Creo variabile che sceglie la collezione topMovie
 var topMovieRef = db.collection("topMovie");
 
-
+//Funzione che aggiunge al database il titolo favVal 
 window.addToFav = function(favVal){
   topMovieRef.doc(favVal).set({
     title:favVal
@@ -28,23 +31,24 @@ window.addToFav = function(favVal){
 window.removeFromFav = function(favVal){
   topMovieRef.doc(favVal).delete().then(function(){
       alert(favVal + " è stato rimosso dai tuoi film preferiti");
+      // è come se cliccassi su "i miei preferiti" di nuovo , per aggiornare la pagina
       document.getElementById("btn").click();
   });
-
- 
 }
 
+//Una funzione javascript si dichiarerebbe function nomefunzione() { codice } ma su stackblitz non funziona
 window.callApiFavourite = function(){
   
   topMovieRef.get().then(function(querySnapshot){
       var table = document.getElementById("visualizzaPreferiti");
+      //Rimozione elementi se già presenti
       while (table.hasChildNodes()) {
           table.removeChild(table.lastChild);
       }
-      count=1;
-      querySnapshot.forEach(function (doc) {
+      //Cicla per ogni elemento del database
+      querySnapshot.forEach(function(doc) {
 
-        $.getJSON('https://www.omdbapi.com/?apikey=ee0a66a0&t='+encodeURI( doc.id)).then(function(response){  
+        $.getJSON('https://www.omdbapi.com/?apikey=ee0a66a0&t='+encodeURI(doc.id)).then(function(response){  
            
             var tr = document.createElement("tr");
             var td = document.createElement("td");
@@ -117,13 +121,9 @@ window.callApiFavourite = function(){
             tr.appendChild(td);
        
             table.append(tr);
-          });
-          
+          }); 
       });
-
-
   });
-
 }
 window.callApiFavTitle = function(title){
 
@@ -184,6 +184,7 @@ window.callApiFavTitle = function(title){
 
 window.viewSaga = function(title){
   $.getJSON('https://www.omdbapi.com/?apikey=ee0a66a0&s='+encodeURI(title)).then(function(response){
+    console.log(response);
       var table = document.getElementById("visualizzaSaga");
       while (table.hasChildNodes()) {
           table.removeChild(table.lastChild);
@@ -192,8 +193,8 @@ window.viewSaga = function(title){
       for (i = 0; i < response.Search.length; i++) {
         var tr = document.createElement("tr");
         var j;
+        //Per visualizzazione in riga
         for(j=0;j<3;j++){
-          console.log(j);
             var td = document.createElement("td");
             td.style.paddingBottom = "2em";
             var mdcard = document.createElement("div");
@@ -211,7 +212,7 @@ window.viewSaga = function(title){
             var img = document.createElement("img");
             img.style.width="20em";
             img.style.height="25em";
-            //img.style.marginLeft="4em";
+            //Response ha diversi elementi ma a noi interessa Search
             if(response.Search[i].Poster!="N/A"){
                 img.src = response.Search[i].Poster; 
             }
@@ -295,8 +296,6 @@ window.apiCall = function(){
     var title = document.getElementById("titolo_film").value;
     //Chiamata all'API per ricerca il titolo
     $.getJSON('https://www.omdbapi.com/?apikey=ee0a66a0&s='+encodeURI(title)).then(function(response){
-      console.log(response);
-      console.log(response.Search);
       var table = document.getElementById("tabella");
       while (table.hasChildNodes()) {
           table.removeChild(table.lastChild);
@@ -323,8 +322,7 @@ window.apiCall = function(){
             
             var img = document.createElement("img");
             img.style.width="20em";
-            img.style.height="25em";
-            //img.style.marginLeft="4em";
+            img.style.height="25em"
             if(response.Search[i].Poster!="N/A"){
                 img.src = response.Search[i].Poster; 
             }
@@ -402,12 +400,12 @@ window.callApiTopTitle = function(title,namediv){
 
     //Chiamata all'API per ricerca il titolo
     $.getJSON('https://www.omdbapi.com/?apikey=ee0a66a0&s='+encodeURI(title)+'&y=2019').then(function(response){
-      console.log(response);
-      console.log(response.Search);
       var table = document.getElementById(namediv);
       var tr = document.createElement("tr");
       var j;
 
+
+      // me ne servono solo 3, prendo queli e basta
       for(j=0;j<3;j++){
         var td = document.createElement("td");
         td.style.paddingBottom = "2em";
@@ -427,7 +425,6 @@ window.callApiTopTitle = function(title,namediv){
         img.style.width="20em";
         img.style.height="25em";
         
-        //img.style.marginLeft="4em";
         if(response.Search[j].Poster!="N/A"){
             img.src = response.Search[j].Poster; 
         }
@@ -489,8 +486,7 @@ window.callApiTopTitle = function(title,namediv){
         td.appendChild(mdcard);
         tr.appendChild(td);
        
-    }
-       
+    }       
     table.appendChild(tr); 
 });   
 
@@ -507,73 +503,20 @@ window.callApiTop = function(){
  Vue.use(VueMaterial.default)
       Vue.component('router-link', Vue.options.components.RouterLink) 
       Vue.component('router-view', Vue.options.components.RouterView)
-
-      var users = []
-      var favourites = []
-
       const Home = Vue.component('home', {template: '#home'});
       const Page1 = Vue.component('page1', { 
         template: '#page1',
-        data: function() {
-          return {
-            users: users,
-            message: "",
-            selected: 0 
-          };
-        }
       });
       const Page2 = Vue.component('page2', {
         template: '#page2',
-        data: function() {
-          return {
-            users: favourites,
-            message: "",
-            selected: 0
-          };
-        }
       });
        const Page3 = Vue.component('page3', {
         template: '#page3',
-        data: function() {
-          return {
-            users: users,
-            message: "",
-            selected: 0
-          };
-        }
       });
        const Page4 = Vue.component('page4', {
         template: '#page4',
-        data: function() {
-          return {
-            users: users,
-            message: "",
-            selected: 0
-          };
-        }
-      });
-      const Page5 = Vue.component('page5', {
-        template: '#page5',
-        data: function() {
-          return {
-            users: users,
-            message: "",
-            selected: 0
-          };
-        }
       });
 
-      const Detail = Vue.component('detail', { 
-        template: '#detail',
-        computed: {
-          user: function() { 
-            const id = this.$route.params.id;
-            return users.filter(function(u) {
-              return u.id == id;
-            })[0];
-          }
-        }
-      });
 
 
       const router = new VueRouter({
@@ -583,8 +526,6 @@ window.callApiTop = function(){
           {path: '/page2', component: Page2},
           {path: '/page3', component: Page3},
           {path:'/page4',component: Page4},
-          {path:'/page5',component: Page5},
-          {path:'/detail/:id', component: Detail},
           {path:'*', component: Home},
         ]
       })
