@@ -1,4 +1,4 @@
- // Your web app's Firebase configuration
+// Your web app's Firebase configuration
  var firebaseConfig = {
   apiKey: "AIzaSyB9DaAHrf5lDZr_X77_mgZzd388e6QpzAw",
   authDomain: "info-ii.firebaseapp.com",
@@ -125,62 +125,6 @@ window.callApiFavourite = function(){
       });
   });
 }
-window.callApiFavTitle = function(title){
-
-    //Chiamata all'API per ricerca il titolo
-    $.getJSON('https://www.omdbapi.com/?apikey=ee0a66a0&t='+encodeURI(title)).then(function(response){
-      console.log("TITOLO");
-      console.log(response.Title);  
-      var table = document.getElementById("visualizzaPreferiti");
-      var tr = document.createElement("tr");
-
-      var td = document.createElement("td");
-      td.style.paddingBottom = "2em";
-      var mdcard = document.createElement("div");
-        
-      mdcard.classList.add("md-card");
-      mdcard.classList.add("md-theme-default");
-      mdcard.style.width ="20em";
-
-      var mdcardheader = document.createElement("div");
-      mdcardheader.classList.add("md-card-header");
-
-      var mdcardmedia = document.createElement("div");
-      mdcardmedia.classList.add("md-card-media");
-      
-      var img = document.createElement("img");
-      img.style.width="20em";
-      img.style.height="25em";
-      
-      //img.style.marginLeft="4em";
-      if(response.Poster!="N/A"){
-          img.src = response.Poster; 
-      }
-      
-      mdcardmedia.appendChild(img);
-      mdcard.appendChild(mdcardmedia);
-
-      var mdtitle = document.createElement("div");
-      mdtitle.classList.add("md-title");
-      var textTitle = document.createTextNode(response.Title);
-      mdtitle.appendChild(textTitle);
-      mdtitle.style.textAlign="center";
-      mdtitle.style.fontSize="1.2em";
-
-      var mdsubhead = document.createElement("div");
-      mdsubhead.classList.add("md-subhead");
-      mdsubhead.style.textAlign="center";
-
-      mdcardheader.appendChild(mdtitle);
-      mdcardheader.appendChild(mdsubhead);
-  
-      //var mdcardmedia = document.createElement("div");
-      mdcard.appendChild(mdcardheader);
-      td.appendChild(mdcard);
-      tr.appendChild(td);   
-      table.appendChild(tr); 
-});   
-}
 
 window.viewSaga = function(title){
   $.getJSON('https://www.omdbapi.com/?apikey=ee0a66a0&s='+encodeURI(title)).then(function(response){
@@ -269,10 +213,6 @@ window.viewSaga = function(title){
             mdcardactions.appendChild(button);
 
             mdcardheader.appendChild(mdcardactions);
-
-
-
-            //var mdcardmedia = document.createElement("div");
             mdcard.appendChild(mdcardheader);
             td.appendChild(mdcard);
             tr.appendChild(td);
@@ -378,9 +318,6 @@ window.apiCall = function(){
 
             mdcardheader.appendChild(mdcardactions);
 
-
-
-            //var mdcardmedia = document.createElement("div");
             mdcard.appendChild(mdcardheader);
             td.appendChild(mdcard);
             tr.appendChild(td);
@@ -479,9 +416,6 @@ window.callApiTopTitle = function(title,namediv){
         mdcardactions.appendChild(button);
 
         mdcardheader.appendChild(mdcardactions);
-
-
-        //var mdcardmedia = document.createElement("div");
         mdcard.appendChild(mdcardheader);
         td.appendChild(mdcard);
         tr.appendChild(td);
